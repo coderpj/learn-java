@@ -28,6 +28,10 @@ public class SocketClient {
 //		runClient2(ip, port);
 	}
 	
+	/**
+	 * @param ip 服务器IP地址
+	 * @param port 服务器端口
+	 */
 	private static void runClient1(String ip, int port) {
 		Socket socket = null;
 		String response = null;
@@ -37,28 +41,29 @@ public class SocketClient {
 		try {
 			socket = new Socket(ip, port);
 			System.out.println("客户端启动...");
-//			int i = 0;
-//			while(true) {
-//				pw = new PrintWriter(socket.getOutputStream(), true);
-//				pw.println(talks[i]);
-//				System.out.println("客户端发送:" + talks[i]);
-//				br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
-//				response = br.readLine();
-//				System.out.println("客户端接收:" + response);
-//				if(i == 2) {
-//					break;
-//				} else {
-//					i++;
-//				}
-//			}
-			for(String talk : talks) {
+			int i = 0;
+			while(true) {
 				pw = new PrintWriter(socket.getOutputStream(), true);
-				pw.println(talk + "\n");
-				System.out.println("客户端发送:" + talk);
+				pw.println(talks[i]);
+				System.out.println("客户端发送:" + talks[i]);
 				br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
 				response = br.readLine();
 				System.out.println("客户端接收:" + response);
+				if(i == 2) {
+					break;
+				} else {
+					i++;
+				}
 			}
+			// while和for都有效
+//			for(String talk : talks) {
+//				pw = new PrintWriter(socket.getOutputStream(), true);
+//				pw.println(talk + "\n");
+//				System.out.println("客户端发送:" + talk);
+//				br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
+//				response = br.readLine();
+//				System.out.println("客户端接收:" + response);
+//			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -111,9 +116,9 @@ public class SocketClient {
 				 dataOutputStream.writeUTF(talk);
 				 System.out.println("客户端发送：" + talk);
 				 // 接收服务端内容
-//				 dataInputStream = new DataInputStream(socket.getInputStream());
-//				 response = dataInputStream.readUTF();
-//				 System.out.println("客户端接收：" + responose);
+				 dataInputStream = new DataInputStream(socket.getInputStream());
+				 response = dataInputStream.readUTF();
+				 System.out.println("客户端接收：" + response);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
